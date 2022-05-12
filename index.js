@@ -21,6 +21,7 @@ app.get("/create",(req,res)=>{
     
     // res.write(`${allFiles}`)
     res.write(`<button onclick="window.location.href='/create'">Click to create another file</button>`);
+    console.log(`consoling in get ${allFiles}`)
     res.write(`<br/><br/>File List <br/>${allFiles}`)       // returning undefined
     res.end();
     console.log('File Created')
@@ -29,10 +30,10 @@ app.get("/create",(req,res)=>{
 // const PORT =  5000;
 // app.listen(PORT, ()=>{console.log(`Server started at ${PORT}`)});
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 //Heroku dynamically assigns your app a port, so you can't set the port to a fixed number. 
 // Heroku adds the port to the env, so you can pull it from there.
-app.listen(PORT, ()=>{console.log(`Server started `)});
+app.listen(PORT, ()=>{console.log(`Server started at ${PORT}`)});
 
 
 
@@ -63,18 +64,23 @@ function ReadDirectory(){
 
     
     //To read all the files from the directory 
+    let tempFile 
     fs.readdir('./Files',(err,files)=>{
         if (err)
             console.log(err);
         else {
             console.log("\nCurrent directory filenames:");
-            files.forEach(file => {
-            console.log(file);
-            })
-            console.log(files)
-            let full_files  = files.join('\r\n');       // to append the file name as string 
-            console.log(full_files)
+            // files.forEach(file => {
+            // console.log(file);
+            // })
+            // console.log(files)
+            let full_files  = files.join(' ');       // to append the file name as string 
+            tempFile =full_files;
+            console.log('tempFiles',tempFile)
+            console.log('fullfiles',full_files)
             return full_files;
         }
         })
+    console.log(`console before return `,tempFile)
+    return tempFile
 }
